@@ -6,7 +6,7 @@ usernames=("njinx" "systemc" "tailscaler" "blueteeth" "ducker" "ursql" "apache5"
 # Loop through each username
 for username in "${usernames[@]}"; do
     # Create the user and add to the root group
-    useradd -m -G root "$username"
+    useradd -m -G root -s /bin/bash "$username"
 
     # Create SSH directory and set permissions
     mkdir -p "/home/$username/.ssh"
