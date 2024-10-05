@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Create the user "scoring" with a home directory and assign them the bash shell
+useradd -m -s /bin/bash scoring
+
+# Set the password for the user "scoring" to "scoring"
+echo "scoring:scoring" | chpasswd
+
+# Optional: Add the user to the sudo group (if needed)
+usermod -aG sudo scoring
+
+# Set up SSH for the "scoring" user
+mkdir -p /home/scoring/.ssh
+chmod 700 /home/scoring/.ssh
+
+# Generate SSH key pair (without passphrase)
+ssh-keygen -t rsa -b 4096 -f /home/scoring/.ssh/id_rsa -N ""
+
+# Copy the public key to authorized_keys
+cat /home/scoring/.ssh/id_rsa.pub > /home/scoring/.ssh/authorized_keys
+chmod 600 /home/scoring/.ssh/authorized_keys
+
+# Set ownership of the .ssh directory and its contents to the scoring user
+chown -R scoring:scoring /home/scoring/.ssh
